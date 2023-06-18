@@ -73,25 +73,32 @@ const NameInputWidget = ({ setState, sendMessage, actions }) => {
 
 const AgeDropdownWidget = ({ setState, sendMessage, actions }) => {
   const [age, setAge] = useState("");
+  const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
 
   const handleAgeChange = (event) => {
     setAge(event.target.value);
   };
 
   const handleAgeSubmit = () => {
-    actions.handleAge();
+    const message = createChatBotMessage(age);
+    actions.handleAge(message.message);
+    setSubmitButtonClicked(true);
   };
 
   return (
     <div>
-      <select value={age} onChange={handleAgeChange}>
-        {Array.from({ length: 40 - 18 + 1 }, (_, index) => (
-          <option key={index + 18} value={index + 18}>
-            {index + 18}
-          </option>
-        ))}
-      </select>
-      <button onClick={handleAgeSubmit}>Submit</button>
+      {!submitButtonClicked && (
+        <div>
+          <select value={age} onChange={handleAgeChange}>
+            {Array.from({ length: 40 - 18 + 1 }, (_, index) => (
+              <option key={index + 18} value={index + 18}>
+                {index + 18}
+              </option>
+            ))}
+          </select>
+          <button onClick={handleAgeSubmit}>Submit</button>
+        </div>
+      )}
     </div>
   );
 };

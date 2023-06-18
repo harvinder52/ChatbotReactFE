@@ -30,14 +30,31 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
       step: "name",
     }));
   };
-  const handleAge = () => {
+  const handleAge = (age) => {
+    const userMessage = createClientMessage(age);
     const botMessage = createChatBotMessage(
       "Thank you. In 5 seconds, bot will exit"
     );
 
+    let counter = 5;
+    const intervalId = setInterval(() => {
+      console.log(botMessage);
+      const botMessageCopy = createChatBotMessage(counter, {
+        withAvatar: true,
+      });
+      setState((prev) => ({
+        ...prev,
+        messages: [...prev.messages, botMessageCopy],
+      }));
+      counter--;
+      if (counter === 0) {
+        clearInterval(intervalId);
+      }
+    }, 1000);
+
     setState((prev) => ({
       ...prev,
-      messages: [...prev.messages, botMessage],
+      messages: [...prev.messages, userMessage, botMessage],
       step: "age",
     }));
   };
