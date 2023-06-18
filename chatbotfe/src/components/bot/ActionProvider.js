@@ -8,12 +8,37 @@ import {
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   const handleHello = () => {
     const userMessage = createClientMessage("Got it!");
-    const botMessage = createChatBotMessage("Enter your Name");
+    const botMessage = createChatBotMessage("Enter your Name", {
+      widget: "nameInputWidget",
+    });
 
     setState((prev) => ({
       ...prev,
       messages: [...prev.messages, userMessage, botMessage],
       step: "name",
+    }));
+  };
+  const handleName = (name) => {
+    const userMessage = createClientMessage(name);
+    const botMessage = createChatBotMessage("Enter your Age", {
+      widget: "ageDropdownWidget",
+    });
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, userMessage, botMessage],
+      step: "name",
+    }));
+  };
+  const handleAge = () => {
+    const botMessage = createChatBotMessage(
+      "Thank you. In 5 seconds, bot will exit"
+    );
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+      step: "age",
     }));
   };
 
@@ -24,6 +49,8 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         return React.cloneElement(child, {
           actions: {
             handleHello,
+            handleName,
+            handleAge,
           },
         });
       })}

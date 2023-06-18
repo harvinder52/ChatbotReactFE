@@ -19,7 +19,10 @@ const ChatbotConfig = {
       widgetName: "buttonWidget",
       widgetFunc: (props) => <ButtonWidget {...props} />,
     },
-
+    {
+      widgetName: "nameInputWidget",
+      widgetFunc: (props) => <NameInputWidget {...props} />,
+    },
     {
       widgetName: "ageDropdownWidget",
       widgetFunc: (props) => <AgeDropdownWidget {...props} />,
@@ -42,7 +45,33 @@ const ButtonWidget = ({ setState, sendMessage, actions }) => {
   );
 };
 
-const AgeDropdownWidget = ({ setState, sendMessage }) => {
+const NameInputWidget = ({ setState, sendMessage, actions }) => {
+  const [name, setName] = useState("");
+  const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
+
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleNameSubmit = () => {
+    const message = createChatBotMessage(name);
+    actions.handleName(message.message);
+    setSubmitButtonClicked(true);
+  };
+
+  return (
+    <div>
+      {!submitButtonClicked && (
+        <div>
+          <input type="text" value={name} onChange={handleNameChange} />
+          <button onClick={handleNameSubmit}>Submit</button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+const AgeDropdownWidget = ({ setState, sendMessage, actions }) => {
   const [age, setAge] = useState("");
 
   const handleAgeChange = (event) => {
@@ -50,22 +79,17 @@ const AgeDropdownWidget = ({ setState, sendMessage }) => {
   };
 
   const handleAgeSubmit = () => {
-    const message = createChatBotMessage(`Age: ${age}`);
-    setState((prevState) => ({
-      ...prevState,
-      step: "thankyou",
-      age: age,
-    }));
-    sendMessage(message);
+    actions.handleAge();
   };
 
   return (
     <div>
       <select value={age} onChange={handleAgeChange}>
-        <option value="">Select Age</option>
-        <option value="18-25">18-25</option>
-        <option value="26-30">26-30</option>
-        <option value="31-40">31-40</option>
+        {Array.from({ length: 40 - 18 + 1 }, (_, index) => (
+          <option key={index + 18} value={index + 18}>
+            {index + 18}
+          </option>
+        ))}
       </select>
       <button onClick={handleAgeSubmit}>Submit</button>
     </div>
