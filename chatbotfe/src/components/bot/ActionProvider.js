@@ -4,8 +4,10 @@ import {
   createClientMessage,
   Chatbot,
 } from "react-chatbot-kit";
+import { useNavigate } from "react-router-dom";
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
+  const navigate = useNavigate();
   const handleHello = () => {
     const userMessage = createClientMessage("Got it!");
     const botMessage = createChatBotMessage("Enter your Name", {
@@ -47,7 +49,8 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         messages: [...prev.messages, botMessageCopy],
       }));
       counter--;
-      if (counter === 0) {
+      if (counter === -1) {
+        navigate("/exit");
         clearInterval(intervalId);
       }
     }, 1000);

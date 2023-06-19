@@ -1,6 +1,8 @@
 import React from "react";
-
-const ConfirmationPage = ({ name, age }) => {
+import { useSelector } from "react-redux";
+const ConfirmationPage = () => {
+  const age = useSelector((state) => state.student.age);
+  const name = useSelector((state) => state.student.name);
   return (
     <div
       style={{
