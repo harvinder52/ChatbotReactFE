@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 const ConfirmationPage = () => {
   const age = useSelector((state) => state.student.age);
   const name = useSelector((state) => state.student.name);
+  console.log(age, name);
+
   return (
     <div
       style={{
@@ -14,7 +16,8 @@ const ConfirmationPage = () => {
     >
       <div>
         <h1>
-          Your name {name} aged {age} has been added to the student system.
+          Your name {name} aged {age.age.toString()} has been added to the
+          student system.
         </h1>
         <p>You may now exit.</p>
       </div>

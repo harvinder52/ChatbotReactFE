@@ -56,11 +56,11 @@ const ChatboxPage = () => {
   };
 
   const NameInputWidget = ({ setState, sendMessage, actions }) => {
-    const [name, setName] = useState("");
+    const [name, setInputName] = useState("");
     const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
 
     const handleNameChange = (event) => {
-      setName(event.target.value);
+      setInputName(event.target.value);
     };
 
     const handleNameSubmit = () => {
@@ -97,11 +97,11 @@ const ChatboxPage = () => {
   };
 
   const AgeDropdownWidget = ({ setState, sendMessage, actions }) => {
-    const [age, setAge] = useState("");
+    const [age, setDropdownAge] = useState("");
     const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
 
     const handleAgeChange = (event) => {
-      setAge(event.target.value);
+      setDropdownAge(event.target.value);
     };
 
     const handleAgeSubmit = () => {
@@ -109,7 +109,7 @@ const ChatboxPage = () => {
       actions.handleAge(message.message);
       setSubmitButtonClicked(true);
       console.log(age);
-      dispatch(setAge({ age: age }));
+      dispatch(setAge({ age: message.message }));
     };
 
     return (
