@@ -56,40 +56,28 @@ const ChatboxPage = () => {
   };
 
   const NameInputWidget = ({ setState, sendMessage, actions }) => {
-    const [name, setInputName] = useState("");
     const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
 
-    const handleNameChange = (event) => {
-      setInputName(event.target.value);
-    };
-
-    const handleNameSubmit = () => {
-      const message = createChatBotMessage(name);
-      actions.handleName(message.message);
-      setSubmitButtonClicked(true);
-      dispatch(setName(message.message));
+    const handleKeyDown = (event) => {
+      if (event.key === "Enter") {
+        const message = createChatBotMessage(event.target.value);
+        actions.handleName(message.message);
+        setSubmitButtonClicked(true);
+        dispatch(setName(message.message));
+      }
     };
 
     return (
       <div>
         {!submitButtonClicked && (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <TextField
               type="text"
-              value={name}
-              onChange={handleNameChange}
               variant="outlined"
               label="Name"
+              onKeyDown={handleKeyDown}
               size="small"
             />
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={handleNameSubmit}
-              size="small"
-            >
-              Submit
-            </Button>
           </div>
         )}
       </div>
@@ -97,27 +85,24 @@ const ChatboxPage = () => {
   };
 
   const AgeDropdownWidget = ({ setState, sendMessage, actions }) => {
-    const [age, setDropdownAge] = useState("");
     const [submitButtonClicked, setSubmitButtonClicked] = useState(false);
 
     const handleAgeChange = (event) => {
-      setDropdownAge(event.target.value);
-    };
-
-    const handleAgeSubmit = () => {
-      const message = createChatBotMessage(age);
+      const message = createChatBotMessage(event.target.value);
       actions.handleAge(message.message);
       setSubmitButtonClicked(true);
-      console.log(age);
+      console.log(event.target.value);
       dispatch(setAge({ age: message.message }));
     };
+
+    const handleAgeSubmit = () => {};
 
     return (
       <div>
         {!submitButtonClicked && (
-          <div style={{ display: "flex", alignItems: "center" }}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
             <FormControl variant="outlined">
-              <Select value={age} onChange={handleAgeChange} native>
+              <Select onChange={handleAgeChange} native>
                 {Array.from({ length: 40 - 18 + 1 }, (_, index) => (
                   <option key={index + 18} value={index + 18}>
                     {index + 18}
@@ -125,14 +110,6 @@ const ChatboxPage = () => {
                 ))}
               </Select>
             </FormControl>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              onClick={handleAgeSubmit}
-            >
-              Submit
-            </Button>
           </div>
         )}
       </div>
