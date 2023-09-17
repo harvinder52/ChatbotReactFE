@@ -8,6 +8,17 @@ import { useNavigate } from "react-router-dom";
 
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   const navigate = useNavigate();
+  const handleGotIt = () => {
+    const botMessage = createChatBotMessage("Pick a Slot!", {
+      widget: "selectSlotWidget",
+    });
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, botMessage],
+      step: "name",
+    }));
+  };
   const handleHello = () => {
     const userMessage = createClientMessage("Got it!");
     const botMessage = createChatBotMessage("Enter your Name", {
@@ -62,12 +73,12 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
     }));
   };
 
-  // Put the handleHello function in the actions object to pass to the MessageParser
   return (
     <div>
       {React.Children.map(children, (child) => {
         return React.cloneElement(child, {
           actions: {
+            handleGotIt,
             handleHello,
             handleName,
             handleAge,
