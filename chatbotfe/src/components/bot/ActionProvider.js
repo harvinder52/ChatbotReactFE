@@ -9,26 +9,28 @@ import { useNavigate } from "react-router-dom";
 const ActionProvider = ({ createChatBotMessage, setState, children }) => {
   const navigate = useNavigate();
   const handleGotIt = () => {
-    const botMessage = createChatBotMessage("Pick a Slot!", {
-      widget: "selectSlotWidget",
-    });
-
-    setState((prev) => ({
-      ...prev,
-      messages: [...prev.messages, botMessage],
-      step: "name",
-    }));
-  };
-  const handleHello = () => {
     const userMessage = createClientMessage("Got it!");
-    const botMessage = createChatBotMessage("Enter your Name", {
-      widget: "nameInputWidget",
+    const botMessage = createChatBotMessage("Pick Your Slot", {
+      widget: "selectSlotWidget",
     });
 
     setState((prev) => ({
       ...prev,
       messages: [...prev.messages, userMessage, botMessage],
       step: "name",
+    }));
+  };
+  const handlePickedSlot = (slotTiming) => {
+    console.log(slotTiming);
+    const userMessage = createClientMessage(slotTiming);
+    const botMessage = createChatBotMessage("Enter Your Name!", {
+      widget: "nameInputWidget",
+    });
+
+    setState((prev) => ({
+      ...prev,
+      messages: [...prev.messages, userMessage, botMessage],
+      step: "slot",
     }));
   };
   const handleName = (name) => {
@@ -79,7 +81,7 @@ const ActionProvider = ({ createChatBotMessage, setState, children }) => {
         return React.cloneElement(child, {
           actions: {
             handleGotIt,
-            handleHello,
+            handlePickedSlot,
             handleName,
             handleAge,
           },

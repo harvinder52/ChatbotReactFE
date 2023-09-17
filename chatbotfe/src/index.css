@@ -24,7 +24,7 @@ code {
   margin-top: 1rem;
   padding: 0.75rem 1.5rem;
   font-size: 1.2rem;
-  background-color: #fca311;
+  background-color: #0e2be8;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -33,7 +33,7 @@ code {
 }
 
 .enroll-button:hover {
-  background-color: #e69500;
+  background-color: #6389f3;
 }
 .chatbot-container {
   position: fixed;

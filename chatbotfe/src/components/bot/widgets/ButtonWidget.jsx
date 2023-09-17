@@ -5,7 +5,8 @@ const ButtonWidget = ({ setState, sendMessage, actions }) => {
   const [buttonClicked, setButtonClicked] = useState(false);
   const handleButtonClick = () => {
     //const message = createClientMessage("hello", { role: "user" });
-    actions.handleHello();
+    actions.handleGotIt();
+    //actions.handleHello();
     setButtonClicked(true);
   };
 

@@ -8,6 +8,7 @@ import NameInputWidget from "./bot/widgets/NameInputWidget";
 import AgeDropdownWidget from "./bot/widgets/AgeDropDownWidget";
 
 import "react-chatbot-kit/build/main.css";
+import { SelectSlotWidget } from "./bot/widgets/SelectSlotWidget";
 
 const ChatboxPage = () => {
   const ChatbotConfig = {
@@ -17,6 +18,10 @@ const ChatboxPage = () => {
       }),
     ],
     widgets: [
+      {
+        widgetName: "selectSlotWidget",
+        widgetFunc: (props) => <SelectSlotWidget {...props} />,
+      },
       {
         widgetName: "buttonWidget",
         widgetFunc: (props) => <ButtonWidget {...props} />,
